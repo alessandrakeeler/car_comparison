@@ -43,7 +43,13 @@ def interact():
 
 @app.route('/print/<int:num>', methods=['GET'])
 def print(num):
+    """
+    Outputs all information about a specific vehicle.
 
+    Returns:
+        ret_dict (dict): information about a specific vehicle
+
+    """
     ret_dict = {}
  
     ret_dict['Model Year'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][0]['Data']
