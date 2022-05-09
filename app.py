@@ -19,7 +19,6 @@ def load_data():
     global data
 
     with open('MY2022_Fuel_Consumption_Ratings.xml', 'r') as f:
-   # with open('test.xml', 'r') as f:
         data = xmltodict.parse(f.read())
 
     return f'Data loaded from file to dictionary.\n'
@@ -45,7 +44,6 @@ def interact():
 @app.route('/print', methods=['GET'])
 def print():
 
-#    for i in range(len(data['Workbook']['Worksheet']['Table']['Row'])):
     ret_dict = {}
  
     ret_dict['Model Year'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][0]['Data']
@@ -64,13 +62,6 @@ def print():
     ret_dict['CO2 Rating']=data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][13]['Data']
     ret_dict['Smog Rating'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][14]['Data']
 
-   # ret_dict['Make']=data['Table']['Cell'][1]['Data']
-   # ret_dict['Model']=data['Table']['Cell'][2]['Data']
-  #  ret_dict['Vehicle Class']=data['Table']['Cell'][3]['Data']
- #   ret_dict['Engine Size(L)']=data['Table']['Cell'][4]['Data']
-   # ret_dict['Cylinders']=data['Table']['Cell'][5]['Data']
-  #  ret_dict['Transmission']=data['Table']['Cell'][6]['Data']
- #   ret_dict['Fuel Type']=data['Table']['Cell'][7]['Data']
     return ret_dict
 
 
