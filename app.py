@@ -41,26 +41,26 @@ def interact():
     return ret;
 
 
-@app.route('/print', methods=['GET'])
-def print():
+@app.route('/print/<int:num>', methods=['GET'])
+def print(num):
 
     ret_dict = {}
  
-    ret_dict['Model Year'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][0]['Data']
-    ret_dict['Make']= data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][1]['Data']
-    ret_dict['Model'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][2]['Data']
-    ret_dict['Vehicle Class'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][3]['Data']
-    ret_dict['Engine Size(L)'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][4]['Data']
-    ret_dict['Cylinders'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][5]['Data']
-    ret_dict['Transmission'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][6]['Data']
-    ret_dict['Fuel Type'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][7]['Data']
-    ret_dict['Fuel Consumption (City (L/100 km)'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][8]['Data']
-    ret_dict['Fuel Consumption(Hwy (L/100 km))'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][9]['Data']
-    ret_dict['Fuel Consumption(Comb (L/100 km))'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][10]['Data']
-    ret_dict['Fuel Consumption(Comb (mpg))'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][11]['Data']
-    ret_dict['CO2 Emissions(g/km)'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][12]['Data']
-    ret_dict['CO2 Rating']=data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][13]['Data']
-    ret_dict['Smog Rating'] = data['Workbook']['Worksheet']['Table']['Row'][1]['Cell'][14]['Data']
+    ret_dict['Model Year'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][0]['Data']
+    ret_dict['Make']= data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][1]['Data']
+    ret_dict['Model'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][2]['Data']
+    ret_dict['Vehicle Class'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][3]['Data']
+    ret_dict['Engine Size(L)'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][4]['Data']
+    ret_dict['Cylinders'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][5]['Data']
+    ret_dict['Transmission'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][6]['Data']
+    ret_dict['Fuel Type'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][7]['Data']
+    ret_dict['Fuel Consumption (City (L/100 km)'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][8]['Data']
+    ret_dict['Fuel Consumption(Hwy (L/100 km))'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][9]['Data']
+    ret_dict['Fuel Consumption(Comb (L/100 km))'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][10]['Data']
+    ret_dict['Fuel Consumption(Comb (mpg))'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][11]['Data']
+    ret_dict['CO2 Emissions(g/km)'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][12]['Data']
+    ret_dict['CO2 Rating']=data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][13]['Data']
+    ret_dict['Smog Rating'] = data['Workbook']['Worksheet']['Table']['Row'][num]['Cell'][14]['Data']
 
     return ret_dict
 
