@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 import logging
 import xmltodict
 import pandas as pd
@@ -55,23 +55,30 @@ def interact():
     return ret;
 
 
+
+@app.route('/makes', methods = ['GET'])
+def get_makes():
+    """
+    Outputs all makes in dataset.
+    """
+    make_list = [make for make in data['Make']]
+    return jsonify(make_list)
+
+
 @app.route('/models_for_<make>', methods=['GET'])
 def models_for_make(make):
     """
     Outputs all models under a specified make. Make must be capitalized. 
 
-    Returns:
-        model_dict: a dict that contains a list of all models for specified make
-
     """
-    
+
     make_dict = data['Make'][make]
     model_list = []
     for model in make_dict:
         model_list.append(model)
-    model_dict = {make: model_list}
 
-    return model_dict
+
+    return jsonify(model_list)
 
 
 
