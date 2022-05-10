@@ -29,12 +29,15 @@ def load_data():
     """
     logging.info("Reading in fuel consumption data.")
 
-    global data
 
     if request.method == "POST":
         rd.flushdb()
 
+        data = {}
         df = pd.read_csv("fuel_ratings.csv")
+        df = df.applymap(lambda s: s.replace(" ", "_") if type(s) == str else s)
+        df = df.applymap(lambda s: s.lower() if type(s) == str else s)
+
         columns = [c.replace(" ", "_").lower() for c in list(df.columns)]
         col = [columns[i] for i in range(1, len(columns))]
         df.columns = columns
@@ -46,7 +49,7 @@ def load_data():
                 .last()
                 .to_dict(orient="index")
             }
-            if make == "Acura":
+            if make == "acura":
                 data = {"make": out}
             else:
                 data["make"][make] = out[make]
@@ -252,6 +255,27 @@ def scatter_feature_comparison(feature1, feature2, comparison):
     plt.legend(fontsize="small", loc=2)
     fig.savefig(f"{feature1}_vs_{feature2}_compared_on_{comparison}.png")
     return "Graph saved \n"
+
+
+@app.route('/delete/<make>/<model>', methods = ['DELETE'])
+def delete_model(make, model):
+    model_dict = json.loads(rd.get(make))
+    model_dict.pop(model)
+    rd.set(make, json.dumps(model_dict))
+    
+    return f"{make} {model} deleted from redis database \n"
+
+@app.route('/update/<make>/<model>/<feature>/<value>', methods = ['UPDATE'])
+def update(make, model, feature, value):
+    model_dict = json.loads(rd.get(make))
+    model_dict[model][feature] = value
+
+    rd.set(make, json.dumps(model_dict))
+
+    return f"{make} {model} {feature} updated to {value}"
+
+
+
 
 
 @app.route("/interact", methods=["GET"])
