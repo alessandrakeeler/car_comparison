@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fuel-consumption-flask-service
+spec:
+  type: ClusterIP
+  selector:
+    app: fuel-consumption-flask
+  ports:
+  - name: fuel-consumption-flask
+    port: 5000
+    targetPort: 5000

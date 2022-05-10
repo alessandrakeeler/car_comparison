@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fuel-consumption-flask-deployment
+  labels:
+    app: fuel-consumption-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fuel-consumption-flask
+  template:
+    metadata:
+      labels:
+        app: fuel-consumption-flask
+    spec:
+      containers:
+        - name: fuel-consumption-flask
+          imagePullPolicy: Always
+          image: sloats/fuel-consumption:0.1
+          env:
+          - name: REDIS_IP
+            value: "127.0.0.1"
+          ports:
+          - name: http
+            containerPort: 5000
