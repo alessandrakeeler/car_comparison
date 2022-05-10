@@ -2,23 +2,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fuel-emissions-flask-deployment
+  name: fuel-consumption-flask-deployment
   labels:
-    app: fuel-emissions-flask
+    app: fuel-consumption-flask
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fuel-emissions-flask
+      app: fuel-consumption-flask
   template:
     metadata:
       labels:
-        app: fuel-emissions-flask
+        app: fuel-consumption-flask
     spec:
       containers:
-        - name: fuel-emissions-flask
+        - name: fuel-consumption-flask
           imagePullPolicy: Always
-          image: sloats/fuel-emissions:0.1
+          image: sloats/fuel-consumption:0.1
           env:
           - name: REDIS_IP
             value: "127.0.0.1"

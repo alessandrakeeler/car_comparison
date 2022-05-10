@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fuel-emissions-db-service
+  name: fuel-consumption-db-service
 spec:
   type: ClusterIP
   selector:
-    app: fuel-emissions-db
+    app: fuel-consumption-db
   ports:
-  - name: fuel-emissions-db
+  - name: fuel-consumption-db
     port: 6379
     targetPort: 6379

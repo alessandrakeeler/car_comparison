@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fuel-emissions-db-deployment
+  name: fuel-consumption-db-deployment
   labels:
-    app: fuel-emissions-db
+    app: fuel-consumption-db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fuel-emissions-db
+      app: fuel-consumption-db
   template:
     metadata:
       labels:
-        app: fuel-emissions-db
+        app: fuel-consumption-db
     spec:
       containers:
-        - name: fuel-emissions-db
+        - name: fuel-consumption-db
           image: redis:6
           ports:
           - name: http
