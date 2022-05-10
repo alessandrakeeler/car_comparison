@@ -1,15 +1,10 @@
-FROM centos:7.9.2009
+FROM python:3.9
 
-RUN yum update -y && \
-    yum install -y python3
+RUN pip3 install --user -r requirements.txt
 
-RUN mkdir /app
-RUN pip3 install --user pandas
-WORKDIR /app
-COPY requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
+COPY ./src/* /app/
+COPY ./fuel_ratings.csv /app/fuel_ratings.csv
 
-COPY . /app
-
+WORKDIR /app/
 ENTRYPOINT ["python3"]
-CMD ["app.py"]
+CMD ["api.py"]

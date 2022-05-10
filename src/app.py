@@ -34,7 +34,7 @@ def load_data():
     if request.method == "POST":
         rd.flushdb()
 
-        df = pd.read_csv("MY2022 Fuel Consumption Ratings.csv")
+        df = pd.read_csv("fuel_ratings.csv")
         columns = [c.replace(" ", "_").lower() for c in list(df.columns)]
         col = [columns[i] for i in range(1, len(columns))]
         df.columns = columns
