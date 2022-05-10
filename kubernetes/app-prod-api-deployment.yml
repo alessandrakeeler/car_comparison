@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fuel-emissions-flask-deployment
+  labels:
+    app: fuel-emissions-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fuel-emissions-flask
+  template:
+    metadata:
+      labels:
+        app: fuel-emissions-flask
+    spec:
+      containers:
+        - name: fuel-emissions-flask
+          imagePullPolicy: Always
+          image: sloats/fuel-emissions:0.1
+          env:
+          - name: REDIS_IP
+            value: "127.0.0.1"
+          ports:
+          - name: http
+            containerPort: 5000
