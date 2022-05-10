@@ -8,6 +8,7 @@ import os
 import redis
 import seaborn as sns
 import matplotlib.pyplot as plt
+from helper_functions import make_exists, model_exists
 
 """ redis_ip = os.environ.get('REDIS_IP')
 if not redis_ip:
@@ -22,10 +23,9 @@ app = Flask(__name__)
 @app.route("/data", methods=["POST", "GET"])
 def load_data():
     """
-    Loads fuel consumption data.
+    POST : Loads fuel consumption data into Redis
+    GET : Returns fuel consumption data as a dictionary 
 
-    Returns:
-        string that states that the data has been loaded.
     """
     logging.info("Reading in fuel consumption data.")
 
@@ -58,7 +58,7 @@ def load_data():
         for make in final_data:
             rd.set(make, json.dumps(final_data[make]))
 
-        return "Data loaded into redis"
+        return "Data loaded into redis \n"
 
     elif request.method == "GET":
         makes = []
@@ -67,7 +67,7 @@ def load_data():
         return json.dumps(makes, indent=4)
 
     else:
-        return "Method only supports POST and GET"
+        return "Method only supports POST and GET \n"
 
 
 @app.route("/makes", methods=["GET"])
@@ -84,18 +84,20 @@ def get_makes():
 @app.route("/<make>/<model>/features", methods=["GET"])
 def get_arguments(make, model):
     """
-    Ouputs all possible features for each make
+    Ouputs all possible features for each make and model
     """
-    feature_list = list(json.loads(rd.get(make))[model].keys())
-    return jsonify(feature_list)
+
+    make_dict = json.loads(rd.get(make))
+    return jsonify(list(make_dict[model].keys()))
 
 
-@app.route("/<make>", methods=["GET"])
-def models_for_make(make):
+@app.route("/<make>/models", methods=["GET"])
+def models_for_make(make: str):
     """
     Outputs all models under a specified make.
 
     """
+
     make_dict = json.loads(rd.get(make))
     model_list = []
     for model in make_dict:
@@ -105,7 +107,7 @@ def models_for_make(make):
 
 
 @app.route("/<make>/<model>/data", methods=["GET"])
-def model_data(make, model):
+def model_data(make: str, model: str):
     """
     Gets all data for a specified make and model
     """
@@ -113,7 +115,7 @@ def model_data(make, model):
 
 
 @app.route("/<make>/<model>/<feature>")
-def get_feature(make, model, feature):
+def get_feature(make: str, model: str, feature: str):
     """
     Gets a feature for a certain make and model
     """
@@ -121,7 +123,7 @@ def get_feature(make, model, feature):
 
 
 @app.route("/average_fuel_consumption_<make>/<type>/<units>", methods=["GET"])
-def avg_make_consumption(make, type, units):
+def avg_make_consumption(make:str, type:str, units:str):
     """
     Gets the average fuel consumption of a make of vehicle
 
@@ -151,7 +153,7 @@ def avg_make_consumption(make, type, units):
 
 
 @app.route("/<make>/average_<feature>", methods=["GET"])
-def avg_feature(make, feature):
+def avg_feature(make:str, feature:str):
     """
     Gets the average of any numerical feature
     """
@@ -169,7 +171,7 @@ def avg_feature(make, feature):
 
 
 @app.route("/scatter/<feature1>/<feature2>", methods=["GET"])
-def scatter_feature_make(feature1, feature2):
+def scatter_feature_make(feature1:str, feature2:str):
     """
     Scatterplots two features against eachother, compared on make
     """
@@ -210,7 +212,7 @@ def scatter_feature_make(feature1, feature2):
 
 
 @app.route("/scatter/<feature1>/<feature2>/<comparison>", methods=["GET"])
-def scatter_feature_comparison(feature1, feature2, comparison):
+def scatter_feature_comparison(feature1:str, feature2:str, comparison:str):
     """
     Scatterplots two numerical features, compared on a custom categorical feature
     """
@@ -258,7 +260,7 @@ def scatter_feature_comparison(feature1, feature2, comparison):
 
 
 @app.route('/delete/<make>/<model>', methods = ['DELETE'])
-def delete_model(make, model):
+def delete_model(make:str, model:str):
     model_dict = json.loads(rd.get(make))
     model_dict.pop(model)
     rd.set(make, json.dumps(model_dict))
@@ -266,15 +268,13 @@ def delete_model(make, model):
     return f"{make} {model} deleted from redis database \n"
 
 @app.route('/update/<make>/<model>/<feature>/<value>', methods = ['UPDATE'])
-def update(make, model, feature, value):
+def update(make:str, model:str, feature:str, value):
     model_dict = json.loads(rd.get(make))
     model_dict[model][feature] = value
 
     rd.set(make, json.dumps(model_dict))
 
     return f"{make} {model} {feature} updated to {value}"
-
-
 
 
 
