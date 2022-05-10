@@ -132,6 +132,11 @@ def avg_feature(make, feature):
     return f"The average {feature} for {make} is {avg}"
 
 
+@app.route('/scatter/<feature1>/<feature2>/<comparison>')
+def scatter_feature(feature1, feature2, comparison):
+
+    
+
 
 
 
