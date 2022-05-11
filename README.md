@@ -26,42 +26,71 @@ This data describes all vehicles released in 2022. It includes the following fea
 - fuel_consumption(comb_(mpg))
 - co2_emissions(g/km)
 - co2_rating
-- smog_rating
+- smog_rating   
+
+Some important definitions/clarifications: 
+- make is what you think of when you think car "brand". Acura, Toyota, Volvo, are all MAKES
+- model is the "style" of car that falls under the "brand". ILX and MDX SH-AWD are MODELS of the MAKE Acura. 
+- All data in this dataset is lowercase, and all spaces are replaced with underscores. (See example below)
+- "Feature" refers to the datapoints within each car (ie smog_rating, fuel_type, etc...)
+- Each car is identified through both its make and model. 
 
 The data is stored in a Redis database, its structure resembles the folowing JSON: 
 ```
 Note that there are obviously more vehicle models per each make, however the data was truncated for readability. 
-"Acura": {
-            "ILX": {
-                "Vehicle Class": "Compact",
-                "Engine Size(L)": 2.4,
-                "Cylinders": 4,
-                "Transmission": "AM8",
-                "Fuel Type": "Z",
-                "Fuel Consumption (City (L/100 km)": 9.9,
-                "Fuel Consumption(Hwy (L/100 km))": 7.0,
-                "Fuel Consumption(Comb (L/100 km))": 8.6,
-                "Fuel Consumption(Comb (mpg))": 33,
-                "CO2 Emissions(g/km)": 200,
-                "CO2 Rating": 6,
-                "Smog Rating": 3
-            }
-        }, ... }
-"Alfa Romeo": {
-            "Giulia": {
-                "Vehicle Class": "Mid-size",
-                "Engine Size(L)": 2.0,
-                "Cylinders": 4,
-                "Transmission": "A8",
-                "Fuel Type": "Z",
-                "Fuel Consumption (City (L/100 km)": 10.0,
-                "Fuel Consumption(Hwy (L/100 km))": 7.2,
-                "Fuel Consumption(Comb (L/100 km))": 8.7,
-                "Fuel Consumption(Comb (mpg))": 32,
-                "CO2 Emissions(g/km)": 205,
-                "CO2 Rating": 6,
-                "Smog Rating": 3
-            }, ... }
+       "infiniti": {
+            "q50_awd": {
+                "make": "infiniti",
+                "model": "q50_awd",
+                "vehicle_class": "mid-size",
+                "engine_size(l)": 3.0,
+                "cylinders": 6,
+                "transmission": "as7",
+                "fuel_type": "z",
+                "fuel_consumption_(city_(l/100_km)": 12.5,
+                "fuel_consumption(hwy_(l/100_km))": 8.7,
+                "fuel_consumption(comb_(l/100_km))": 10.8,
+                "fuel_consumption(comb_(mpg))": 26,
+                "co2_emissions(g/km)": 254,
+                "co2_rating": 5,
+                "smog_rating": 3
+            },
+            "qx80_4wd": {
+                "make": "infiniti",
+                "model": "qx80_4wd",
+                "vehicle_class": "suv:_standard",
+                "engine_size(l)": 5.6,
+                "cylinders": 8,
+                "transmission": "as7",
+                "fuel_type": "z",
+                "fuel_consumption_(city_(l/100_km)": 17.5,
+                "fuel_consumption(hwy_(l/100_km))": 12.2,
+                "fuel_consumption(comb_(l/100_km))": 15.1,
+                "fuel_consumption(comb_(mpg))": 19,
+                "co2_emissions(g/km)": 355,
+                "co2_rating": 3,
+                "smog_rating": 3
+            }, ...
+        }
+    ,
+    {
+        "gmc": {
+            "acadia": {
+                "make": "gmc",
+                "model": "acadia",
+                "vehicle_class": "suv:_standard",
+                "engine_size(l)": 3.6,
+                "cylinders": 6,
+                "transmission": "a9",
+                "fuel_type": "x",
+                "fuel_consumption_(city_(l/100_km)": 12.3,
+                "fuel_consumption(hwy_(l/100_km))": 8.8,
+                "fuel_consumption(comb_(l/100_km))": 10.7,
+                "fuel_consumption(comb_(mpg))": 26,
+                "co2_emissions(g/km)": 252,
+                "co2_rating": 5,
+                "smog_rating": 6
+            },...
             }
         
 
