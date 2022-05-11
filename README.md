@@ -67,6 +67,9 @@ Note that there are obviously more vehicle models per each make, however the dat
 
 ```
 
+## **Getting Started with the Repo**
+The initial setup of this repository is fairly simple! 
+1. `git clone 
 
 ## **Files**
 ### **root**
@@ -106,11 +109,23 @@ This is the file where all of the API tests are contained.
 
 
 
-## **Getting Started with the Repo**
+
+
+
+
+
+
+
+
 ## **Interacting with the API (CRUD)**   
 The API has a wide variety of routes for investigating the data set.   
 All route commands start with `curl localhost:<port number>/<route_to_execute> `   
 Ex): `curl localhost:5000/makes`   
+
+Before any data querying routes can be ran, the data must first be read into the Redis database. To do this, run `curl localhost<port_number>/data -X POST`   
+If the data load was successful, the output is "Data loaded into Redis".  
+Troubleshooting the data upload:
+- Make sure that the data file is named fuel_ratings.csv and in the root directory.   
 
 
 The routes within this API (to execute, need to start the command with `curl localhost:<port number>/`):
