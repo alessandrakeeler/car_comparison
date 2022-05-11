@@ -1,10 +1,10 @@
-NSPACE="sloats"
+NSPACE="ggn242"
 APP="app"
 VER="0.1"
-RPORT="6416"
-FPORT="5016"
-UID="876634"
-GID="816966"
+RPORT="6421"
+FPORT="5021"
+UID="874029"
+GID="823583"
 
 list-targets:
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
