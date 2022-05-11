@@ -130,7 +130,68 @@ The routes within this API (to execute, need to start the command with `curl loc
 
 ### Some sample output of CRUD Jobs:   
 
-` curl localhost:<portnumber>/makes`
+` curl localhost:<portnumber>/makes`  
+
+[
+  "mini", 
+  "cadillac", 
+  "jeep", 
+  "maserati", 
+  "audi", 
+  "porsche", 
+  "lincoln", 
+  "mercedes-benz", 
+  "genesis", 
+  "volkswagen", 
+  "alfa_romeo", 
+  "ram", 
+  "dodge", 
+  "lamborghini", 
+  "ford", 
+  "bmw", 
+  "hyundai", 
+  "land_rover", 
+  "nissan", 
+  "honda", 
+  "buick", 
+  "mazda", 
+  "lexus", 
+  "jaguar", 
+  "subaru", 
+  "acura", 
+  "fiat", 
+  "kia", 
+  "toyota", 
+  "chrysler", 
+  "bentley", 
+  "volvo", 
+  "bugatti", 
+  "rolls-royce", 
+  "mitsubishi", 
+  "chevrolet", 
+  "aston_martin", 
+  "infiniti", 
+  "gmc"
+]
+
+
+`curl localhost:<port_number>/acura/ilx/data`  
+{
+  "co2_emissions(g/km)": 200, 
+  "co2_rating": 6, 
+  "cylinders": 4, 
+  "engine_size(l)": 2.4, 
+  "fuel_consumption(comb_(l/100_km))": 8.6, 
+  "fuel_consumption(comb_(mpg))": 33, 
+  "fuel_consumption(hwy_(l/100_km))": 7.0, 
+  "fuel_consumption_(city_(l/100_km)": 9.9, 
+  "fuel_type": "z", 
+  "make": "acura", 
+  "model": "ilx", 
+  "smog_rating": 3, 
+  "transmission": "am8", 
+  "vehicle_class": "compact"
+}
 
 
     
