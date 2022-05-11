@@ -69,7 +69,16 @@ Note that there are obviously more vehicle models per each make, however the dat
 
 ## **Getting Started with the Repo**
 The initial setup of this repository is fairly simple! 
-1. `git clone 
+Run  `git clone git@github.com:alessandrakeeler/car_comparison.git`   
+Steps to download the data:
+1. Download the data from [this](https://www.kaggle.com/datasets/rinichristy/2022-fuel-consumption-ratings?resource=download&select=MY2022+Fuel+Consumption+Ratings.csv) link. The data wil download as a zip. 
+2. Click the zip in downloads to open it. Rename the .csv file inside to fuel_ratings.csv
+3. Use whatever method you prefer to scp the data from local to remote.
+4. Place fuel_ratings.csv into the root of the car_comparison directory. 
+
+Now, we need to set up the Flask/Redis environments to run this project in.   
+Run `make all`, if it succeeded, you should get a message along the lines of `"successfully built"`
+
 
 ## **Files**
 ### **root**
@@ -105,10 +114,6 @@ This is the Dockerfile that builds the image and all dependencies for workers.
 ### /test
 - *test_flask.py*   
 This is the file where all of the API tests are contained. 
-
-
-
-
 
 
 
