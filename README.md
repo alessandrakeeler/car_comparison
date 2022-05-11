@@ -1,7 +1,7 @@
-# Car shopping? Beating your competitors? Imagining you can afford an Aston Martin? Why not all! 
+# The Biggest Offenders of the Road (And Wallets!!) of 2022
 ### By Alessandra Keeler, Gauri Nukula, and Sydney Loats 
 #
-This project was developed to investigate the differences between cars produced in 2022. Whether this is used by manufactorers to see how their products stand up against competitors or consumers determining which vehicle is the best purchase, it presents a large amount of data in an easily accessible manner. Feel free to play around and compare car makes, models, vehicle classes, and many many more features to eachother!   
+This project was developed to investigate the differences between cars produced in 2022. More specifically, their fuel consumption and impact on the enviroment (through emissions, smog rating, etc.) Whether this is used by manufactorers to see how their products stand up against competitors or consumers determining which vehicle is the best purchase, it presents a large amount of data in an easily accessible manner. Feel free to play around and compare car makes, models, vehicle classes, and many many more features to eachother!   
 
 
 
