@@ -64,9 +64,6 @@ def execute_job(jid):
 
     img_db.hset(f'job.{jid}', 'image', img) 
     jdb.hset(f'job.{jid}', 'status', 'finished')
-
-    
-    logging.critical(f'EqwksWthMagGrtrThan{mag}.png is saved')
     update_job_status(jid, 'complete')
     
     return 
