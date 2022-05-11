@@ -170,7 +170,7 @@ def avg_feature(make:str, feature:str):
 
     return f"The average {feature} for {make} is {avg}"
 
-
+##TODO this is actually something that should be done by a worker #oopss
 @app.route("/scatter/<feature1>/<feature2>", methods=["GET"])
 def scatter_feature_make(feature1:str, feature2:str):
     """
