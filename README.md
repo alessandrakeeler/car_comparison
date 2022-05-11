@@ -227,6 +227,7 @@ The routes within this API (to execute, need to start the command with `curl loc
 
 ## **Citations**
 
+Rimi. 2022 Fuel Consumption Ratings. Kaggle. Retrieved April 10, 2022, from https://www.kaggle.com/datasets/rinichristy/2022-fuel-consumption-ratings?resource=download&select=MY2022+Fuel+Consumption+Ratings.csv
 
 
 
