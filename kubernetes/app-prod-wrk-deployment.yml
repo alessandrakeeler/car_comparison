@@ -4,16 +4,16 @@ kind: Deployment
 metadata:
   name: car-comparison-wrk-deployment
   labels:
-    app: car-comparison
+    app: car-comparison-wrk
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: car-comparison
+      app: car-comparison-wrk
   template:
     metadata:
       labels:
-        app: car-comparison
+        app: car-comparison-wrk
     spec:
       containers:
         - name: car-comparison

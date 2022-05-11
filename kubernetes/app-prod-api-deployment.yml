@@ -2,26 +2,28 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: car-comparison-flask-deployment
+  name: car-comparison-api-deployment
   labels:
-    app: car-comparison-flask
+    app: car-comparison-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: car-comparison-flask
+      app: car-comparison-api
   template:
     metadata:
       labels:
-        app: car-comparison-flask
+        app: car-comparison-api
     spec:
       containers:
-        - name: car-comparison-flask
+        - name: car-comparison-api
           imagePullPolicy: Always
-          image: sloats/car-comparison:0.1
+          image: sloats/app-api:0.1
           env:
           - name: REDIS_IP
             value: "127.0.0.1"
           ports:
           - name: http
             containerPort: 5000
+
+docker build -t sloats/car-comparison-api:1.0 -f Dockerfile-gen .
