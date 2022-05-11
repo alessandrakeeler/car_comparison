@@ -67,6 +67,9 @@ Note that there are obviously more vehicle models per each make, however the dat
 
 ```
 
+## **Getting Started with the Repo**
+The initial setup of this repository is fairly simple! 
+1. `git clone 
 
 ## **Files**
 ### **root**
@@ -106,11 +109,23 @@ This is the file where all of the API tests are contained.
 
 
 
-## **Getting Started with the Repo**
+
+
+
+
+
+
+
+
 ## **Interacting with the API (CRUD)**   
 The API has a wide variety of routes for investigating the data set.   
 All route commands start with `curl localhost:<port number>/<route_to_execute> `   
 Ex): `curl localhost:5000/makes`   
+
+Before any data querying routes can be ran, the data must first be read into the Redis database. To do this, run `curl localhost<port_number>/data -X POST`   
+If the data load was successful, the output is "Data loaded into Redis".  
+Troubleshooting the data upload:
+- Make sure that the data file is named fuel_ratings.csv and in the root directory.   
 
 
 The routes within this API (to execute, need to start the command with `curl localhost:<port number>/`):
@@ -130,7 +145,68 @@ The routes within this API (to execute, need to start the command with `curl loc
 
 ### Some sample output of CRUD Jobs:   
 
-` curl localhost:<portnumber>/makes`
+` curl localhost:<portnumber>/makes`  
+
+[
+  "mini", 
+  "cadillac", 
+  "jeep", 
+  "maserati", 
+  "audi", 
+  "porsche", 
+  "lincoln", 
+  "mercedes-benz", 
+  "genesis", 
+  "volkswagen", 
+  "alfa_romeo", 
+  "ram", 
+  "dodge", 
+  "lamborghini", 
+  "ford", 
+  "bmw", 
+  "hyundai", 
+  "land_rover", 
+  "nissan", 
+  "honda", 
+  "buick", 
+  "mazda", 
+  "lexus", 
+  "jaguar", 
+  "subaru", 
+  "acura", 
+  "fiat", 
+  "kia", 
+  "toyota", 
+  "chrysler", 
+  "bentley", 
+  "volvo", 
+  "bugatti", 
+  "rolls-royce", 
+  "mitsubishi", 
+  "chevrolet", 
+  "aston_martin", 
+  "infiniti", 
+  "gmc"
+]
+
+
+`curl localhost:<port_number>/acura/ilx/data`  
+{
+  "co2_emissions(g/km)": 200, 
+  "co2_rating": 6, 
+  "cylinders": 4, 
+  "engine_size(l)": 2.4, 
+  "fuel_consumption(comb_(l/100_km))": 8.6, 
+  "fuel_consumption(comb_(mpg))": 33, 
+  "fuel_consumption(hwy_(l/100_km))": 7.0, 
+  "fuel_consumption_(city_(l/100_km)": 9.9, 
+  "fuel_type": "z", 
+  "make": "acura", 
+  "model": "ilx", 
+  "smog_rating": 3, 
+  "transmission": "am8", 
+  "vehicle_class": "compact"
+}
 
 
     
