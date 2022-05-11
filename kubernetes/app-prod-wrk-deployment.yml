@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fuel-consumption-wrk-deployment
+  name: car-comparison-wrk-deployment
   labels:
-    app: fuel-consumption
+    app: car-comparison
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: fuel-consumption
+      app: car-comparison
   template:
     metadata:
       labels:
-        app: fuel-consumption
+        app: car-comparison
     spec:
       containers:
-        - name: fuel-consumption
+        - name: car-comparison
           imagePullPolicy: Always
           image: sloats/app-wrk:0.1
           env:
