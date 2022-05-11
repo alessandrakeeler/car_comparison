@@ -11,6 +11,13 @@ logging.basicConfig()
 
 @q.worker
 def execute_job(jid):
+    """
+    Worker to execute the graphing job 
+    Args:
+        jid(string): describes the job id of the job to be executed by the worker 
+    Returns:
+        None
+    """
     logging.critical('Inside worker.')
     update_job_status(jid, 'in progress')
 

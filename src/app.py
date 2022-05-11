@@ -8,7 +8,7 @@ import os
 import redis
 import seaborn as sns
 import matplotlib.pyplot as plt
-from helper_functions import make_exists, model_exists
+#from helper_functions import make_exists, model_exists --deprecated
 from jobs import *
 
 """ redis_ip = os.environ.get('REDIS_IP')
@@ -24,7 +24,7 @@ app = Flask(__name__)
 def interact():
     """
     Outputs information on how to interact with the application.
-
+    Args: None
     Returns:
         ret (string): how to interact with the application
     """
@@ -55,7 +55,6 @@ def load_data():
     """
     POST : Loads fuel consumption data into Redis
     GET : Returns fuel consumption data as a dictionary 
-
     """
     logging.info("Reading in fuel consumption data.")
 
@@ -103,7 +102,10 @@ def load_data():
 @app.route("/makes", methods=["GET"])
 def get_makes():
     """
-    Outputs all makes in dataset.
+    Iterates through keys in redis database (makes)
+    Args: None
+    Returns:
+        Jsonified list of all makes in the dataset
     """
     make_list = []
     for key in rd.keys():
@@ -114,7 +116,8 @@ def get_makes():
 def models_for_make(make: str):
     """
     Outputs all models under a specified make.
-
+    Args: make (string)
+    Returns: jsonified list of all models under a specified make
     """
 
     make_dict = json.loads(rd.get(make))
@@ -129,6 +132,11 @@ def models_for_make(make: str):
 def get_arguments(make, model):
     """
     Ouputs all possible features for each make and model
+    Args: 
+        make (string)
+        model (string)
+    Returns: 
+        jsonified list of all features for specified make and model 
     """
 
     make_dict = json.loads(rd.get(make))
@@ -138,7 +146,12 @@ def get_arguments(make, model):
 @app.route("/<make>/<model>/data", methods=["GET"])
 def model_data(make: str, model: str):
     """
-    Gets all data for a specified make and model
+    Outputs all data associated with a specified make and model 
+    Args:
+        make (string)
+        model (string)
+    Returns:
+        Dictionary of all data 
     """
     return json.loads(rd.get(make))[model]
 
@@ -147,6 +160,12 @@ def model_data(make: str, model: str):
 def get_feature(make: str, model: str, feature: str):
     """
     Gets a feature for a certain make and model
+    Args:
+        make (string)
+        model (string)
+        feature (string)
+    Returns: 
+        String describing the feature. 
     """
     return f"{feature} for the {model} model of {make} is {json.loads(rd.get(make))[model][feature]}"
 
@@ -184,7 +203,12 @@ def avg_make_consumption(make:str, type:str, units:str):
 @app.route("/<make>/average_<feature>", methods=["GET"])
 def avg_feature(make:str, feature:str):
     """
-    Gets the average of any numerical feature
+    Gets the average of any numerical feature for a given make 
+    Args:
+        make(string)
+        feature(string)
+    Returns:
+        A string describing the average of the specified feature for the specified make 
     """
     non_numerical = ["vehicle_class", "transmission", "fuel_type"]
     if feature in non_numerical:
@@ -201,6 +225,14 @@ def avg_feature(make:str, feature:str):
 
 @app.route('/delete/<make>/<model>', methods = ['DELETE'])
 def delete_model(make:str, model:str):
+    """
+    Deletes a make/model entry 
+    Args:
+        make(string)
+        model(string)
+    Returns: 
+        A string describing the car that was deleted from the Redis database 
+    """
     model_dict = json.loads(rd.get(make))
     model_dict.pop(model)
     rd.set(make, json.dumps(model_dict))
@@ -209,6 +241,15 @@ def delete_model(make:str, model:str):
 
 @app.route('/update/<make>/<model>/<feature>/<value>', methods = ['UPDATE'])
 def update(make:str, model:str, feature:str, value):
+    """
+    Update a feature for a specified car in the Redis database 
+    Args: 
+        make(string)
+        model(string)
+        feature(string)
+        value(int or string): int if updating a numerical feature, string if updating a categorical feature. 
+    """
+
     model_dict = json.loads(rd.get(make))
     model_dict[model][feature] = value
 
@@ -222,6 +263,8 @@ def update(make:str, model:str, feature:str, value):
 def jobs():
     """
     Route to interact with the job. Route accepts a JSON payload describing the job to be created.
+    POST: Add a job to the database 
+    GET: Returns the command to add a job to the database 
     """
     if request.method == 'POST':
         try:
@@ -245,9 +288,15 @@ def jobs():
 """
 
 @app.route('/jobs/delete/<job_uuid>', methods=['DELETE'])
+
+
 def delete_job(job_uuid:str):
     """
-    API route to delete a specific job.
+    Deletes a job from the job. 
+    Args:
+        job_uuid(string): uuid of job to be deleted
+    Returns:
+        String confirming job has been deleted
     """
     if request.method == 'DELETE':
         if job_uuid == 'all':
@@ -271,12 +320,24 @@ def delete_job(job_uuid:str):
 def get_job_result(job_uuid: str):
     """
     API route for checking on the status of a submitted job
+    Args: 
+        job_uuid(string): uuid of job to be status checked 
+    Returns:
+        Dictionary describing the status of the requested jj_uuid
+
     """
     return json.dumps(get_job_by_id(job_uuid), indent=2) + '\n'  
 
 # download image route 
 @app.route('/download/<job_uuid>', methods=['GET'])
 def download(job_uuid):
+    """
+    Downloads the image associated with the specified job_uuid
+    Args:
+        job_uuid(string): uuid of job to be downloaded
+    Returns:
+        file to be downloaded as attachment 
+    """
     path = f'/app/{job_uuid}.png'
     with open(path, 'wb') as f:
         f.write(img_db.hget(f'job.{job_uuid}', 'image'))
