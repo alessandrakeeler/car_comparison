@@ -9,6 +9,7 @@ import redis
 import seaborn as sns
 import matplotlib.pyplot as plt
 from helper_functions import make_exists, model_exists
+from jobs import *
 
 """ redis_ip = os.environ.get('REDIS_IP')
 if not redis_ip:
@@ -276,6 +277,63 @@ def update(make:str, model:str, feature:str, value):
 
     return f"{make} {model} {feature} updated to {value}"
 
+
+
+@app.route('/jobs', methods = ['POST', 'GET'])
+def jobs():
+    """
+    Route to interact with the job. Route accepts a JSON payload describing the job to be created.
+    """
+    if request.method == 'POST':
+        try:
+            job = request.get_json(force=True)
+        except Exception as e:
+            return json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
+    
+        return json.dumps(add_job(job['feature1'], job['feature2'], job['comparison']), indent=2) + '\n'
+
+    elif request.method == 'GET':
+        redis_dict = {}
+        for key in jdb.keys():
+            redis_dict[str(key)] = {}
+            redis_dict[str(key)]['datetime'] = jdb.hget(key, 'datetime')
+            redis_dict[str(key)]['status'] = jdb.hget(key, 'status')
+        return json.dumps(redis_dict, indent=4) + '\n' + """
+  
+  To submit a job, do the following:
+
+  curl localhost:5028/jobs -X POST -d '{"feature1":feature, "feature2":feature, "comparison":comparison}' -H "Content-Type: application/json"
+"""
+
+@app.route('/jobs/delete/<job_uuid>', methods=['DELETE'])
+def delete_job(job_uuid:str):
+    """
+    API route to delete a specific job.
+    """
+    if request.method == 'DELETE':
+        if job_uuid == 'all':
+            for key in jdb.keys():
+                jdb.delete(key)
+            return f'All jobs deleted.\n'
+        else:
+            for key in jdb.keys():
+                if key == job_uuid:
+                    jdb.delete(key)
+        return f'{job_uuid} has been deleted.\n'
+    else:
+        return """
+    This is a route for DELETE-ing former jobs. Use the form:
+    curl -X DELETE localhost:5028/jobs/delete/<job>
+    Or to delete all jobs, use the form:
+    curl -X DELETE localhost:5028/jobs/delete/all
+    """ 
+
+@app.route('/jobs/<job_uuid>', methods=['GET'])
+def get_job_result(job_uuid: str):
+    """
+    API route for checking on the status of a submitted job
+    """
+    return json.dumps(get_job_by_id(job_uuid), indent=2) + '\n'  
 
 
 @app.route("/interact", methods=["GET"])
