@@ -43,7 +43,7 @@ def _instantiate_job(jid, status, feature1, feature2, comparison_factor):
     return {'id': jid.decode('utf-8'),
             'status': status.decode('utf-8'),
             'feature1': feature1.decode('utf-8'),
-            'feature2': feature2.decode('utf-8')
+            'feature2': feature2.decode('utf-8'),
             'comparison_factor': comparison_factor.decode('utf-8')
            }
 
