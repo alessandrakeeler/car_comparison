@@ -13,21 +13,58 @@ logging.basicConfig()
 def execute_job(jid):
     logging.critical('Inside worker.')
     update_job_status(jid, 'in progress')
+
+    data = jdb.hgetall(f'job.{jid}')
     
-    for key in jdb.keys():
-        mag = float(jdb.hget(key, 'mag'))
+    feature1 = data['feature1']
+    feature2 = data['feature2']
+    comparison_factor = data['comparison_factor']
 
-    df = pd.DataFrame(pts('mag',float(mag)))
-    df_geo = gpd.GeoDataFrame(df, geometry = gpd.points_from_xy(df.longitude,df.latitude))
-    world_data = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-    axis = world_data.plot(color = 'sienna', edgecolor = 'black')
-    df_geo.plot(ax = axis, color = 'red', markersize=8, alpha=0.5, edgecolor='thistle', linewidth=0.4)
+    features = [
+        "make",
+        "model",
+        "vehicle_class",
+        "engine_size(l)",
+        "cylinders",
+        "transmission",
+        "fuel_type",
+        "fuel_consumption_(city_(l/100_km)",
+        "fuel_consumption(hwy_(l/100_km))",
+        "fuel_consumption(comb_(l/100_km))",
+        "fuel_consumption(comb_(mpg))",
+        "co2_emissions(g/km)",
+        "co2_rating",
+        "smog_rating",
+    ]
 
-    axis.set_facecolor('powderblue')
-    plt.xticks(np.arange(-180, 190, step=10), rotation = 45)
-    plt.yticks(np.arange(-90, 100, step=10))
-    plt.title(f'Earthquakes With Magnitude >= {mag}')
-    plt.savefig(f'EqwksWthMagGrtrThan{mag}.png',dpi=600)
+    df = pd.DataFrame(columns=features)
+    for key in rd.keys():
+        make_dict = json.loads(rd.get(key))
+        for model in make_dict:
+            list_items = list((make_dict[model]).items())
+            data_list = [item[1] for item in list_items]
+            df = df.append(pd.Series(data_list, index=df.columns), ignore_index=True)
+
+    if comparison_factor == 'make':
+        sns.set(rc={"figure.figsize": (11.7, 8.27)})
+        scatter = sns.scatterplot(data=df, x=feature1, y=feature2, hue=comparison_factor)
+        plt.legend(fontsize="small", loc=2, bbox_to_anchor=(1, 1.16))
+
+    else: 
+        sns.set(rc={"figure.figsize": (11.7, 8.27)})
+        scatter = sns.scatterplot(data=df, x=feature1, y=feature2, hue=comparison_factor)
+        plt.legend(fontsize="small", loc=2)
+
+    img_path = f"/{feature1}_vs_{feature2}_compared_on_{comparison_factor}.png"
+    fig = scatter.get_figure()
+    fig.savefig(image_pat)
+    
+    with open(image_path, 'rb') as f:
+        img = f.read()
+
+    img_db.hset(f'job.{jid}', 'image', img) 
+    jdb.hset(f'job.{jid}', 'status', 'finished')
+
     
     logging.critical(f'EqwksWthMagGrtrThan{mag}.png is saved')
     update_job_status(jid, 'complete')
