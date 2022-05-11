@@ -1,4 +1,4 @@
-# Insert quirky title here for pity points 
+# Car shopping? Beating your competitors? Imaginging you can afford an Aston Martin? Why not all! 
 ### By Alessandra Keeler, Gauri Nukula, and Sydney Loats 
 #
 This project was developed to investigate the differences between cars produced in 2022. Whether this is used by manufactorers to see how their products stand up against competitors or consumers determining which vehicle is the best purchase, it presents a large amount of data in an easily accessible manner. Feel free to play around and compare car makes, models, vehicle classes, and many many more features to eachother!   
