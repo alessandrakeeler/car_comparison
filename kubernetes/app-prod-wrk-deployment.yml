@@ -4,21 +4,21 @@ kind: Deployment
 metadata:
   name: fuel-consumption-wrk-deployment
   labels:
-    app: aged-wrk
+    app: fuel-consumption
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: aged-wrk
+      app: fuel-consumption
   template:
     metadata:
       labels:
-        app: aged-wrk
+        app: fuel-consumption
     spec:
       containers:
-        - name: aged-wrk
+        - name: fuel-consumption
           imagePullPolicy: Always
-          image: jbolivar101/app-wrk:0.1
+          image: sloats/app-wrk:0.1
           env:
           - name: REDIS_IP
-            value: "10.111.152.210"
+            value: "127.0.0.1"
