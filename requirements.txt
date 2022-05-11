@@ -1,3 +1,5 @@
+Flask==2.0.3
+pytest
 seaborn
 tornado
 hotqueue
