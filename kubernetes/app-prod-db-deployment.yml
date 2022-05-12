@@ -2,21 +2,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: fuel-consumption-db-deployment
+  name: car-comparison-db-deployment
   labels:
-    app: fuel-consumption-db
+    app: car-comparison-db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: fuel-consumption-db
+      app: car-comparison-db
   template:
     metadata:
       labels:
-        app: fuel-consumption-db
+        app: car-comparison-db
     spec:
       containers:
-        - name: fuel-consumption-db
+        - name: car-comparison-db
           image: redis:6
           ports:
           - name: http
