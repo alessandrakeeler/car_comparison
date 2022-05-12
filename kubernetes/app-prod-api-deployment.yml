@@ -18,7 +18,7 @@ spec:
       containers:
         - name: fuel-consumption-flask
           imagePullPolicy: Always
-          image: sloats/fuel-consumption:0.1
+          image: sydneyloats/fuel-consumption:0.1
           env:
           - name: REDIS_IP
             value: "127.0.0.1"
