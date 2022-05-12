@@ -1,4 +1,4 @@
-NSPACE="sloats"
+NSPACE="sydneyloats"
 APP="app"
 VER="0.1"
 RPORT="6416"
