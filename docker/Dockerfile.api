@@ -8,4 +8,4 @@ COPY ./fuel_ratings.csv /app/fuel_ratings.csv
 
 WORKDIR /app/
 ENTRYPOINT ["python3"]
-CMD ["api.py"]
+CMD ["app.py"]

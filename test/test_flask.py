@@ -7,9 +7,6 @@ load_data()
 def test_interact():
     assert isinstance(interact(), str) == True
 
-def test_print():
-    assert isinstance(print_data(), str) == True
-
 def test_makes():
     assert isinstance(model_data('a', 'b'), dict) == True
 
