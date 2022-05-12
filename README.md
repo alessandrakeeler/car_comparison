@@ -104,6 +104,15 @@ Steps to download the data:
 4. Place fuel_ratings.csv into the root of the car_comparison directory. 
 
 **Only do the next steps if you don't already have Kubernetes pods already running for this project!!**
+To check if you have the necessary pods running, log into K8s through ISP and then run `kubectl get pods`.  
+You should get something like this: 
+```
+car-comparison-api-deployment-764fdfd6b6-4nwtl   1/1     Running   0               5h3m
+car-comparison-db-deployment-ddf7f6577-czqnp     1/1     Running   0               12h
+car-comparison-wrk-deployment-895df756f-j8r66    1/1     Running   1 (4h34m ago)   4h57m
+car-comparison-wrk-deployment-895df756f-x5m2f    1/1     Running   4 (4h33m ago)   4h56m
+py-debug-deployment-5dfcf7bdd9-blsnk             1/1     Running   0               7h41m
+```
  
 Run `make all`, to build the Docker images necessary for this deployment. if it succeeded, you should get a message along the lines of `"successfully built"`
 Run `push-all` to push to the DockerHub
