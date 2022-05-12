@@ -10,10 +10,10 @@ from hotqueue import HotQueue
 #if not redis_ip:
  #   raise Exception()
 redis_ip = '127.0.0.1'
-rd = redis.Redis(host='127.0.0.1', port=6413, db=0)
-q = HotQueue("queue", host=redis_ip, port=6413, db=1)
-jdb = redis.Redis(host=redis_ip, port=6413, db=2, decode_responses=True)
-img_db = redis.Redis(host=redis_ip, port=6413, db=3)
+rd = redis.Redis(host='127.0.0.1', port=6379, db=0)
+q = HotQueue("queue", host=redis_ip, port=6379, db=1)
+jdb = redis.Redis(host=redis_ip, port=6379, db=2, decode_responses=True)
+img_db = redis.Redis(host=redis_ip, port=6379, db=3)
 
 def _generate_jid():
     """
