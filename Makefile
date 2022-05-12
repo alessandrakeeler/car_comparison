@@ -53,6 +53,12 @@ run-wrk: build-wrk
                    -d \
                    ${NSPACE}/${APP}-wrk:${VER} 
 
+push-api: build-api
+    docker push ${NSPACE}/${APP}-api:${VER} 
+
+push-wrk: build-wrk
+    docker push ${NSPACE}/${APP}-wrk:${VER} 
+
 
 clean-db:
 	docker stop ${NSPACE}-db && docker rm -f ${NSPACE}-db || true
@@ -71,5 +77,6 @@ run-all: run-db run-api run-wrk
 
 clean-all: clean-db clean-api clean-wrk
 
+push-all: push-api push-wrk
 
-all: clean-all build-all run-all 
+all: clean-all build-all run-all push-all

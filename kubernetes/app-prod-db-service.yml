@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: fuel-consumption-db-service
+  name: car-comparison-db-service
 spec:
   type: ClusterIP
   selector:
-    app: fuel-consumption-db
+    app: car-comparison-db
   ports:
-  - name: fuel-consumption-db
+  - name: car-comparison-db
     port: 6379
     targetPort: 6379

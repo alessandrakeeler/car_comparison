@@ -4,21 +4,21 @@ kind: Deployment
 metadata:
   name: car-comparison-wrk-deployment
   labels:
-    app: car-comparison
+    app: car-comparison-wrk
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: car-comparison
+      app: car-comparison-wrk
   template:
     metadata:
       labels:
-        app: car-comparison
+        app: car-comparison-wrk
     spec:
       containers:
         - name: car-comparison
           imagePullPolicy: Always
-          image: sloats/app-wrk:0.1
+          image: sydneyloats/app-wrk:0.1
           env:
           - name: REDIS_IP
             value: "127.0.0.1"

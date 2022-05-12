@@ -18,7 +18,9 @@ spec:
       containers:
         - name: car-comparison-api
           imagePullPolicy: Always
-          image: sloats/app-api:0.1
+
+          image: sydneyloats/app-api:0.1
+
           env:
           - name: REDIS_IP
             value: "127.0.0.1"
