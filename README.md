@@ -281,6 +281,10 @@ The routes within this API (to execute, need to start the command with `curl loc
 Sample job done by the graphing worker:   
 ![sample_image](https://github.com/alessandrakeeler/car_comparison/blob/main/sample_image.png?raw=true)
 
+## **Testing**
+
+Type `pytest` into the terminal to run the unit tests.
+
 ## **Citations**
 
 Rimi. 2022 Fuel Consumption Ratings. Kaggle. Retrieved April 10, 2022, from https://www.kaggle.com/datasets/rinichristy/2022-fuel-consumption-ratings?resource=download&select=MY2022+Fuel+Consumption+Ratings.csv
