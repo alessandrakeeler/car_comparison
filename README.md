@@ -181,8 +181,8 @@ This is the file where all of the API tests are contained.
 
 
 
-
-
+## **Testing the application**
+To run tests, execute pytest test/test_flask.py in root. 
 
 
 ## **Interacting with the API (CRUD)**   
