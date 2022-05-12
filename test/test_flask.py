@@ -49,3 +49,41 @@ def test_avg_make_consumption():
 def test_avg_feature():
     assert isinstance(avg_feature('a', 'b'), str) == True
 
+def test_data_read():
+    route = f'{api_prefix}/data'
+    response = requests.get(route)
+
+    assert response.ok == True
+    assert response.status_code == 200
+
+    assert isinstance(response.json(), list) == True
+    assert isinstance(response.json()[0], dict) == True
+
+
+def test_jobs_info():
+    route = f'{api_prefix}/jobs'
+    response = requests.get(route)
+
+    assert response.ok == True
+    assert response.status_code == 200
+    assert bool(re.search('To submit a job, do the following', response.text)) == True
+
+def test_jobs_cycle():
+    route = f'{api_prefix}/jobs'
+    job_data = {'feature1': 'smog_rating', 'feature2': 'co2_rating', 'comparison_factor': 'vehicle_class'}
+    response = requests.post(route, json=job_data)
+
+    assert response.ok == True
+    assert response.status_code == 200
+
+    UUID = response.json()['id']
+    assert isinstance(UUID, str) == True
+    assert response.json()['status'] == 'submitted'
+
+    time.sleep(15)
+    route = f'{api_prefix}/jobs/{UUID}'
+    response = requests.get(route)
+
+    assert response.ok == True
+    assert response.status_code == 200
+    assert response.json()['status'] == 'complete'
