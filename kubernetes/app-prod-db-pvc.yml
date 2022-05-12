@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: data
   labels:
-    app: fuel-consumption-redis
+    app: car-comparison-db
 spec:
   accessModes:
     - ReadWriteOnce
