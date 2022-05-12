@@ -100,6 +100,7 @@ def get_makes():
     Returns:
         Jsonified list of all makes in the dataset
     """
+    logging.info('Querying through the makes in the dataset.')
     make_list = []
     for key in rd.keys():
         make_list.append(key.decode("utf-8"))
@@ -113,6 +114,7 @@ def models_for_make(make: str):
     Returns: jsonified list of all models under a specified make
     """
 
+    logging.info('Querying through the models under a make in the dataset.')
     make_dict = json.loads(rd.get(make))
     model_list = []
     for model in make_dict:
@@ -132,6 +134,8 @@ def get_arguments(make, model):
         jsonified list of all features for specified make and model 
     """
 
+    logging.info('Querying through all the features for each make and model.')
+
     make_dict = json.loads(rd.get(make))
     return jsonify(list(make_dict[model].keys()))
 
@@ -146,6 +150,7 @@ def model_data(make: str, model: str):
     Returns:
         Dictionary of all data 
     """
+    logging.info('Output all data with specific make and model.')
     return json.loads(rd.get(make))[model]
 
 
@@ -160,6 +165,7 @@ def get_feature(make: str, model: str, feature: str):
     Returns: 
         String describing the feature. 
     """
+    logging.info('Get feature for certain make and model.')
     return f"{feature} for the {model} model of {make} is {json.loads(rd.get(make))[model][feature]}"
 
 
@@ -177,7 +183,7 @@ def avg_make_consumption(make:str, type:str, units:str):
         String describing the average fuel consumption
 
     """
-
+    logging.info('Computes average fuel consumption')
     if units == "mpg":
         index_string = "fuel_consumption(comb_(mpg))"
     else:
@@ -203,6 +209,7 @@ def avg_feature(make:str, feature:str):
     Returns:
         A string describing the average of the specified feature for the specified make 
     """
+    logging.info('Computes average of any numerical feature')
     non_numerical = ["vehicle_class", "transmission", "fuel_type"]
     if feature in non_numerical:
         return "This is a non numerical feature and not able to be averaged "
@@ -226,6 +233,7 @@ def delete_model(make:str, model:str):
     Returns: 
         A string describing the car that was deleted from the Redis database 
     """
+    logging.info('Deletes entry')
     model_dict = json.loads(rd.get(make))
     model_dict.pop(model)
     rd.set(make, json.dumps(model_dict))
@@ -242,7 +250,7 @@ def update(make:str, model:str, feature:str, value):
         feature(string)
         value(int or string): int if updating a numerical feature, string if updating a categorical feature. 
     """
-
+    logging.info('Updates feature')
     model_dict = json.loads(rd.get(make))
     model_dict[model][feature] = value
 
@@ -259,6 +267,7 @@ def jobs():
     POST: Add a job to the database 
     GET: Returns the command to add a job to the database 
     """
+    logging.info('Submitting a job')
     if request.method == 'POST':
         try:
             job = request.get_json(force=True)
@@ -289,6 +298,7 @@ def delete_job(job_uuid:str):
     Returns:
         String confirming job has been deleted
     """
+    logging.info('Deleting a job')
     if request.method == 'DELETE':
         if job_uuid == 'all':
             for key in jdb.keys():
@@ -317,6 +327,7 @@ def get_job_result(job_uuid: str):
         Dictionary describing the status of the requested jj_uuid
 
     """
+    logging.info('Checking status of submitted job')
     return json.dumps(get_job_by_id(job_uuid), indent=2) + '\n'  
 
 # download image route 
@@ -329,6 +340,7 @@ def download(job_uuid):
     Returns:
         file to be downloaded as attachment 
     """
+    logging.info('Downloading image')
     path = f'/app/{job_uuid}.png'
     with open(path, 'wb') as f:
         f.write(img_db.hget(f'job.{job_uuid}', 'image'))
