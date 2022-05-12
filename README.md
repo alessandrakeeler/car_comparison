@@ -151,6 +151,12 @@ This is the Dockerfile that builds the image and all dependencies for workers.
 
 
 ### /kubernetes 
+- *app-prod-api-deployment.yml*
+- *app-prod-api-service.yml*
+- *app-prod-db-deployment.yml*
+- *app-prod-db-pvc.yml*
+- *app-prod-db-service.yml*
+- *app-prod-wrk-deployment.yml*
 
 
 
