@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 from jobs import *
 
 
-
 app = Flask(__name__)
 
 @app.route("/interact", methods=["GET"])
@@ -266,7 +265,7 @@ def jobs():
         except Exception as e:
             return json.dumps({'status': "Error", 'message': 'Invalid JSON: {}.'.format(e)})
     
-        return json.dumps(add_job(job['feature1'], job['feature2'], job['comparison']), indent=2) + '\n'
+        return json.dumps(add_job(job['feature1'], job['feature2'], job['comparison_factor']), indent=2) + '\n'
 
     elif request.method == 'GET':
         redis_dict = {}
@@ -282,8 +281,6 @@ def jobs():
 """
 
 @app.route('/jobs/delete/<job_uuid>', methods=['DELETE'])
-
-
 def delete_job(job_uuid:str):
     """
     Deletes a job from the job. 

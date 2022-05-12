@@ -28,20 +28,13 @@ build-wrk:
                      -f docker/Dockerfile.wrk \
                      ./
 
-
 run-db: build-db
-	docker run --name ${NSPACE}-db \
-                   -p ${RPORT}:6379 \
-                   -d \
-                   -u ${UID}:${GID} \
-                   -v ${PWD}/data/:/data \
-                   redis:6 \
-                   --save 1 1
+	docker run --name ${NSPACE}-db -p 6913:6379 -d -u ${UID}:${GID} -v ${PWD}/data:/data redis:6 --save 1 1
 
 run-api: build-api
 	RIP=$$(docker inspect ${NSPACE}-db | grep \"IPAddress\" | head -n1 | awk -F\" '{print $$4}') && \
 	docker run --name ${NSPACE}-api \
-                   --env REDIS_IP=${RIP} \
+                   --env REDIS_IP=$${RIP} \
                    -p ${FPORT}:5000 \
                    -d \
                    ${NSPACE}/${APP}-api:${VER} 
@@ -49,14 +42,14 @@ run-api: build-api
 run-wrk: build-wrk
 	RIP=$$(docker inspect ${NSPACE}-db | grep \"IPAddress\" | head -n1 | awk -F\" '{print $$4}') && \
 	docker run --name ${NSPACE}-wrk \
-                   --env REDIS_IP=${RIP} \
+                   --env REDIS_IP=$${RIP} \
                    -d \
                    ${NSPACE}/${APP}-wrk:${VER} 
 
-push-api: build-api
+push-api: run-api
     docker push ${NSPACE}/${APP}-api:${VER} 
 
-push-wrk: build-wrk
+push-wrk: run-api
     docker push ${NSPACE}/${APP}-wrk:${VER} 
 
 

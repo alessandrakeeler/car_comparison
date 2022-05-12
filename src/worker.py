@@ -55,16 +55,17 @@ def execute_job(jid):
     if comparison_factor == 'make':
         sns.set(rc={"figure.figsize": (11.7, 8.27)})
         scatter = sns.scatterplot(data=df, x=feature1, y=feature2, hue=comparison_factor)
+        fig = scatter.get_figure()
         plt.legend(fontsize="small", loc=2, bbox_to_anchor=(1, 1.16))
 
     else: 
         sns.set(rc={"figure.figsize": (11.7, 8.27)})
         scatter = sns.scatterplot(data=df, x=feature1, y=feature2, hue=comparison_factor)
+        fig = scatter.get_figure()
         plt.legend(fontsize="small", loc=2)
 
     img_path = f"/{feature1}_vs_{feature2}_compared_on_{comparison_factor}.png"
-    fig = scatter.get_figure()
-    fig.savefig(image_pat)
+    fig.savefig(image_path)
     
     with open(image_path, 'rb') as f:
         img = f.read()

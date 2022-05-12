@@ -9,6 +9,7 @@ from hotqueue import HotQueue
 redis_ip = os.environ.get('REDIS_IP')
 if not redis_ip:
     raise Exception()
+
 rd = redis.Redis(host=redis_ip, port=6379, db=0)
 q = HotQueue("queue", host=redis_ip, port=6379, db=1)
 jdb = redis.Redis(host=redis_ip, port=6379, db=2, decode_responses=True)
@@ -57,10 +58,10 @@ def _queue_job(jid):
     return
 
 
-def add_job(feature1, feature2, comparison_fator, status="submitted"):
+def add_job(feature1, feature2, comparison_factor, status="submitted"):
     """Add a job to the redis queue."""
     jid = _generate_jid()
-    job_dict = _instantiate_job(jid, status, feature1, feature2, comparison_factors)
+    job_dict = _instantiate_job(jid, status, feature1, feature2, comparison_factor)
     _save_job(_generate_job_key(jid), job_dict)
     _queue_job(jid)
     return job_dict
