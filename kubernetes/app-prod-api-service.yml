@@ -6,7 +6,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: car-comparison-API
+    app: car-comparison-api
   ports:
   - name: car-comparison-api
     port: 5000

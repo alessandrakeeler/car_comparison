@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request
 import logging
-import xmltodict
 import pandas as pd
 import json
 import statistics as s
@@ -11,11 +10,6 @@ import matplotlib.pyplot as plt
 #from helper_functions import make_exists, model_exists --deprecated
 from jobs import *
 
-""" redis_ip = os.environ.get('REDIS_IP')
-if not redis_ip:
-    raise Exception() """
-
-rd = redis.StrictRedis(host="127.0.0.1", port=6413, db=13)
 
 
 app = Flask(__name__)

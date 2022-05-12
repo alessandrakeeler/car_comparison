@@ -3,3 +3,6 @@ pytest
 seaborn
 tornado
 hotqueue
+redis 
+pandas
+logging 

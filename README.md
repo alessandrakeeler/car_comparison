@@ -103,9 +103,25 @@ Steps to download the data:
 3. Use whatever method you prefer to scp the data from local to remote, if necessary. 
 4. Place fuel_ratings.csv into the root of the car_comparison directory. 
 
-Now, we need to set up the Flask/Redis environments to run this project in.   
-Run `make all`, if it succeeded, you should get a message along the lines of `"successfully built"`
+**Only do the next steps if you don't already have Kubernetes pods already running for this project!!**
+ 
+Run `make all`, to build the Docker images necessary for this deployment. if it succeeded, you should get a message along the lines of `"successfully built"`
+Run `push-all` to push to the DockerHub
+Log into isp `ssh <user>@isp.tacc.utexas.edu` then into `ssh <username>@coe332-k8s.tacc.cloud`
+Now run the below commands in order. 
+```
+kubectl apply -f app-prod-db-service.yml
+kubectl apply -f app-prod-db-pvc.yml
+kubectl apply -f app-prod-db-deployment.yml
+kubectl apply -f app-prod-api-service.yml
+kubectl apply -f app-prod-api-deployment.yml
+kubectl apply -f app-prod-wrk-deployment.yml
+```
 
+#Todo Alessandra copy paste working outputs
+Make sure all your pods are running by using the command `kubectl get all -o wide`
+To start using the API, execute into the API pod by running 
+#TODO alessandra copy adress of flask api 
 
 ## **Files**
 ### **root**
@@ -135,6 +151,12 @@ This is the Dockerfile that builds the image and all dependencies for workers.
 
 
 ### /kubernetes 
+- *app-prod-api-deployment.yml*
+- *app-prod-api-service.yml*
+- *app-prod-db-deployment.yml*
+- *app-prod-db-pvc.yml*
+- *app-prod-db-service.yml*
+- *app-prod-wrk-deployment.yml*
 
 
 
@@ -151,7 +173,7 @@ This is the file where all of the API tests are contained.
 
 ## **Interacting with the API (CRUD)**   
 The API has a wide variety of routes for investigating the data set.   
-All route commands start with `curl localhost:<port number>/<route_to_execute> `   
+All route commands start with `curl localhost:<port number>/<route_to_execute> ` while inside the api-deployment pod (see above for instructions on that!).    
 Ex): `curl localhost:5000/makes`   
 
 Before any data querying routes can be ran, the data must first be read into the Redis database. To do this, run `curl localhost<port_number>/data -X POST`   
@@ -242,10 +264,6 @@ The routes within this API (to execute, need to start the command with `curl loc
 
 
     
-
-
-
-
 ## **Interacting with the API (Jobs)**
 - `/jobs -X GET   `   will return instructions on how to submit a job
 - `/jobs/delete/<job_uuid> -X DELETE `  will delete a job given the job uuid 
