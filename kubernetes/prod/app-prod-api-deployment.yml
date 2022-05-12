@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: car-comparison-api-deployment
+  labels:
+    app: car-comparison-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: car-comparison-api
+  template:
+    metadata:
+      labels:
+        app: car-comparison-api
+    spec:
+      containers:
+        - name: car-comparison-api
+          imagePullPolicy: Always
+          image: sydneyloats/app-api:0.1
+          env:
+          - name: REDIS_IP
+            value: "10.99.189.113"
+          ports:
+          - name: http
+            containerPort: 5000

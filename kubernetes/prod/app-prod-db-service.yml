@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: car-comparison-db-service
+spec:
+  type: ClusterIP
+  selector:
+    app: car-comparison-db
+  ports:
+  - name: car-comparison-db
+    port: 6379
+    targetPort: 6379
