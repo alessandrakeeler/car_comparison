@@ -2,27 +2,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: car-comparison-flask-deployment
+  name: car-comparison-api-deployment
   labels:
-    app: car-comparison-flask
+    app: car-comparison-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: car-comparison-flask
+      app: car-comparison-api
   template:
     metadata:
       labels:
-        app: car-comparison-flask
+        app: car-comparison-api
     spec:
       containers:
-        - name: car-comparison-flask
+        - name: car-comparison-api
           imagePullPolicy: Always
+<<<<<<< HEAD
 <<<<<<< HEAD
           image: sydneyloats/fuel-consumption:0.1
 =======
           image: sloats/car-comparison:0.1
 >>>>>>> 6bef7e473df2ad02f527154a29bc0550f4bed796
+=======
+          image: sloats/app-api:0.1
+>>>>>>> 23c93ed1f2a411aea5f01475e6dee9de154437d6
           env:
           - name: REDIS_IP
             value: "127.0.0.1"
